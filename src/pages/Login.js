@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button, Col, Form, FormControl, FormLabel, Row, Spinner,
 } from 'react-bootstrap';
@@ -19,8 +19,6 @@ function Login() {
   const [errMsg, setErrMsg] = useState('');
   const navigate = useNavigate();
   const { setAuth } = useAuth(); 
-
- 
 
   useEffect(() => {
     userRef.current.focus();
@@ -44,13 +42,11 @@ function Login() {
           password: pass,
         }),
         credentials: 'include',
-        // prevent CORS errors.
-        mode: 'cors',
       });
 
       if (res.ok) {
         const { accessToken } = await res.json();
-        setAuth(accessToken);
+        localStorage.setItem('auth', accessToken);
         navigate('/dashboard');
       } 
 

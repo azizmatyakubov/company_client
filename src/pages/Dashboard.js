@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet';
-import Jdenticon from '../components/Jdenticon';
 
 
 function Dashboard() {

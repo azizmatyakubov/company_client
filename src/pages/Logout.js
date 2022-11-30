@@ -11,16 +11,34 @@ function Logout() {
   const title = 'Logout';
 
   const [isLoading, setIsLoading] = useState(false);
-  const { logout } = useAuth();
+  const { setUser, setAuth, user, auth } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
 
-    await logout();
-    setIsLoading(false);
-    navigate('/');
+    setIsLoading(true);
+
+    try {
+      const res = await fetch('/api/v1/auth/logout', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (res.status === 204) {
+        console.log('logout successful');
+        setAuth(null);
+        console.log(auth);
+        console.log(user);
+        navigate('/');
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-alert
+      alert(`failed to logout: ${err}`);
+    } finally {
+      setIsLoading(false);
+    }
+
   };
 
   return (

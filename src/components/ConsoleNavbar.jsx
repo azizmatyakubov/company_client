@@ -1,17 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import Jdenticon from "./Jdenticon";
-import useAuth from "../hooks/useAuth";
-
-import { logout } from "../services/MockAuthService";
+import { useLogout } from "../hooks/useLogout";
 
 function ConsoleNavbar() {
-  const navigate = useNavigate();
-
-  const handleLogout = async (e) => {
+  const { logout } = useLogout();
+  const handleLogout = (e) => {
     e.preventDefault();
-
-    await logout();
-    navigate("/");
+    logout();
   };
 
   return (
@@ -58,7 +52,7 @@ function ConsoleNavbar() {
                 aria-labelledby="dropdownMenu"
               >
                 <li>
-                  <a className="dropdown-item" href="/console/profile">
+                  <a className="dropdown-item" href="/dashboard">
                     Profile
                   </a>
                 </li>

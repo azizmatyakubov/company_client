@@ -4,10 +4,10 @@ import "./sidebar.css";
 
 function Sidebar() {
   const items = [
-    { path: "/console", title: "Dashboard", icon: "bi-house-door" },
-    { path: "/console/apps", title: "Applications", icon: "bi-layers" },
-    { path: "/console/users", title: "Users", icon: "bi-people" },
-    { path: "/console/settings", title: "Settings", icon: "bi-gear" },
+    { path: "/dashboard", title: "Dashboard", icon: "bi-house-door" },
+    { path: "/apps", title: "Applications", icon: "bi-layers" },
+    { path: "/users", title: "Users", icon: "bi-people" },
+    { path: "/settings", title: "Settings", icon: "bi-gear" },
   ];
 
   return (

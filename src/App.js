@@ -13,6 +13,7 @@ import Apps from './pages/Apps';
 import Users from './pages/Users';
 import Settings from './pages/Settings';
 
+
 function  App() {
   return (
         <Routes>
@@ -27,6 +28,7 @@ function  App() {
         
           </Route>
           {/* Protected Routes */}
+
           <Route element={<ConsoleLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="profile" element={<Profile />} />

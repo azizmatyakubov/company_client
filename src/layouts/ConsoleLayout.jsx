@@ -1,14 +1,21 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 
 import Footer from "../components/Footer";
 import ConsoleNavbar from "../components/ConsoleNavbar";
 import Sidebar from "../components/Sidebar";
 import useAuth from "../hooks/useAuth";
+import { useEffect } from "react";
 
 function ConsoleLayout() {
-  const { auth } = useAuth();
-  console.log(auth);
-  if (!auth) return <Navigate to="/login" />;
+  const token = localStorage.getItem("auth");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
   return (
     <>
