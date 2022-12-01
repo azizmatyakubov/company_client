@@ -3,6 +3,7 @@ import "./navbar.scss";
 import { HiSearch } from "react-icons/hi";
 import { MdLanguage } from "react-icons/md";
 import { MdOutlineDarkMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 import { MdNotificationsNone } from "react-icons/md";
 import { MdOutlineChat } from "react-icons/md";
 import UserContext from "../../context/UserContext";
@@ -23,7 +24,11 @@ const Topbar = () => {
             English
           </div>
           <div className="item" onClick={() => setDarkMode(!darkMode)}>
-            <MdOutlineDarkMode className="icon" />
+            {darkMode ? (
+              <MdDarkMode className="icon" />
+            ) : (
+              <MdOutlineDarkMode className="icon" />
+            )}
           </div>
 
           <div className="item">

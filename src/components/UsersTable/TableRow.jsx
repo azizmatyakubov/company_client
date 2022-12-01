@@ -1,7 +1,7 @@
 import React from "react";
 import { FiEdit2 } from "react-icons/fi";
 
-const TableRow = () => {
+const TableRow = ({ user }) => {
   return (
     <div className="table-row table-header-row">
       <div className="table-col">
@@ -9,22 +9,24 @@ const TableRow = () => {
           <img src="https://picsum.photos/200" alt="user" />
         </div>
         <div className="table-col-name">
-          <h5>John Doe</h5>
-          <span>@Joined</span>
+          <h5>{user.name}</h5>
+          <span>{user.surname}</span>
         </div>
       </div>
       <div className="table-col">
         <div className="table-col-badge admin">
-          <span>Admin</span>
+          <span>{user.role}</span>
         </div>
       </div>
-      <div className="table-col">blablabla@gmail.com</div>
+      <div className="table-col">{user.email}</div>
       <div className="table-col">
         <div className="table-col-badge sales">
-          <span>Sales</span>
+          <span>
+            {user.department ? user.department.name : "No department"}
+          </span>
         </div>
       </div>
-      <div className="table-col">Product Manager</div>
+      <div className="table-col">{user.position}</div>
       <div className="table-col">
         <div className="table-col-btn">
           <div className="edit-btn">{<FiEdit2 />}</div>

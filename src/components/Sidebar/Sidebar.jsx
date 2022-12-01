@@ -1,100 +1,57 @@
-import "./sidebar.scss";
+import SidebarItem from "./SidebarItem";
+
 import { RxDashboard } from "react-icons/rx";
 import { FiUsers } from "react-icons/fi";
-// import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-// import CreditCardIcon from "@mui/icons-material/CreditCard";
-// import StoreIcon from "@mui/icons-material/Store";
 import { IoIosStats } from "react-icons/io";
-// import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-// import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { MdNotificationsNone } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
-// import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
-// import { DarkModeContext } from "../../context/darkModeContext";
-// import { useContext } from "react";
+import { HiOutlineOfficeBuilding } from "react-icons/hi";
+
+import "./sidebar.scss";
 
 const Sidebar = () => {
-  //   const { dispatch } = useContext(DarkModeContext);
   return (
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">lamadmin</span>
+          <span className="logo">Admin Dashboard</span>
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <li>
-            <RxDashboard className="icon" />
-            <span>Dashboard</span>
-          </li>
+          <SidebarItem Icon={RxDashboard} text="Dashboard" isDisabled={false} />
+
           <p className="title">LISTS</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
-            <li>
-              <FiUsers className="icon" />
-              <span>Users</span>
-            </li>
-          </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
-            <li>
-              {/* <StoreIcon className="icon" /> */}
-              <span>Products</span>
-            </li>
-          </Link>
-          <li>
-            {/* <CreditCardIcon className="icon" /> */}
-            <span>Orders</span>
-          </li>
-          <li>
-            {/* <LocalShippingIcon className="icon" /> */}
-            <span>Delivery</span>
-          </li>
+          <SidebarItem Icon={FiUsers} text="Users" isDisabled={false} />
+          <SidebarItem
+            Icon={HiOutlineOfficeBuilding}
+            text="Departments"
+            isDisabled={true}
+          />
+          <SidebarItem Icon={FiUsers} text="Orders" isDisabled={true} />
+          <SidebarItem Icon={FiUsers} text="Categories" isDisabled={true} />
+
           <p className="title">USEFUL</p>
-          <li>
-            <IoIosStats className="icon" />
-            <span>Stats</span>
-          </li>
-          <li>
-            <MdNotificationsNone className="icon" />
-            <span>Notifications</span>
-          </li>
+          <SidebarItem Icon={IoIosStats} text="Stats" isDisabled={true} />
+          <SidebarItem
+            Icon={MdNotificationsNone}
+            text="Notifications"
+            isDisabled={true}
+          />
+
           <p className="title">SERVICE</p>
-          <li>
-            {/* <SettingsSystemDaydreamOutlinedIcon className="icon" /> */}
-            <span>System Health</span>
-          </li>
-          <li>
-            {/* <PsychologyOutlinedIcon className="icon" /> */}
-            <span>Logs</span>
-          </li>
-          <li>
-            <FiSettings className="icon" />
-            <span>Settings</span>
-          </li>
+          <SidebarItem Icon={FiSettings} text="Settings" isDisabled={true} />
+          <SidebarItem Icon={CgProfile} text="Profile" isDisabled={true} />
+
           <p className="title">USER</p>
-          <li>
-            <CgProfile className="icon" />
-            <span>Profile</span>
-          </li>
-          <li>
-            {/* <ExitToAppIcon className="icon" /> */}
-            <span>Logout</span>
-          </li>
+          <SidebarItem Icon={FiSettings} text="Settings" isDisabled={true} />
+          <SidebarItem Icon={CgProfile} text="Profile" isDisabled={true} />
+          <SidebarItem Icon={FiSettings} text="Logout" isDisabled={true} />
         </ul>
-      </div>
-      <div className="bottom">
-        {/* <div
-          className="colorOption"
-          onClick={() => dispatch({ type: "LIGHT" })}
-        ></div>
-        <div
-          className="colorOption"
-          onClick={() => dispatch({ type: "DARK" })}
-        ></div> */}
       </div>
     </div>
   );

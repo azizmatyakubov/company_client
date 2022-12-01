@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineCloudDownload, AiOutlineUserAdd } from "react-icons/ai";
+import AddUserModal from "./AddUserModal";
 import TableRow from "./TableRow";
 
 import "./usersTable.scss";
 
 const UsersTable = () => {
+  const [users, setUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
+  const getUsers = async () => {
+    const res = await fetch("/api/v1/users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth")}`,
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <div className="table">
       {/* Table Header  */}
       <div className="table-header">
         <h5>Users list</h5>
-        <div className="table-badge">48 users</div>
+        <div className="table-badge">{users.length} users</div>
 
         <button className="table-btn-white">
           <span>
@@ -18,7 +42,7 @@ const UsersTable = () => {
           </span>
           Download CSV
         </button>
-        <button className="table-btn-dark-blue">
+        <button className="table-btn-dark-blue" onClick={handleShowModal}>
           <span>
             <AiOutlineUserAdd size={20} />
           </span>
@@ -36,10 +60,15 @@ const UsersTable = () => {
           <div className="table-col"></div>
         </div>
         {/* table row for display users */}
-        <TableRow />
-        <TableRow />
-        <TableRow />
+        {users.map((user) => (
+          <TableRow key={user._id} user={user} />
+        ))}
       </div>
+      <AddUserModal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        getUsers={getUsers}
+      />
     </div>
   );
 };
