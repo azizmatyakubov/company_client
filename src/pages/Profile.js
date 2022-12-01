@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet';
 
-import Jdenticon from '../components/Jdenticon';
 import useAuth from '../hooks/useAuth';
 
 function Logout() {
@@ -26,11 +25,7 @@ function Logout() {
               <button className="btn btn-outline-secondary btn-sm">Edit</button>
             </div>
           </div>
-          <div className="col-auto d-none d-lg-block">
-            <div className="pt-3 pe-3">
-              <Jdenticon name={user.username} height="96px" width="96px" />
-            </div>
-          </div>
+          
         </div>
       </div>
     </>

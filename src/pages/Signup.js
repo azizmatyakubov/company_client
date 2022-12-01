@@ -6,15 +6,12 @@ import {
   Col, Button, Form, FormControl, InputGroup, FormLabel, Spinner,
 } from 'react-bootstrap';
 
-import StatusAlert from '../components/StatusAlert';
 import { emailPattern, namePattern } from '../common/constants';
 import useAuth from '../hooks/useAuth';
 
 import './signup.css';
 
 function Signup() {
-  const title = 'Signup';
-
   const [isLoading, setIsLoading] = useState(false);
   const { addUser } = useAuth();
   const navigate = useNavigate();
@@ -24,9 +21,6 @@ function Signup() {
 
   const alertOpts = useRef({ isShow: false, message: '' });
 
-  const handleDismiss = () => {
-    alertOpts.current.isShow = false;
-  };
 
   const handleSignup = async (data) => {
     try {
@@ -48,7 +42,7 @@ function Signup() {
   return (
     <>
       <Helmet>
-        <title>{title}</title>
+        <title>Signup</title>
       </Helmet>
       <main className="container-signup">
         <Form className="row g-2" noValidate>
@@ -148,11 +142,7 @@ function Signup() {
           </Button>
         </Form>
       </main>
-      <StatusAlert show={alertOpts.current.isShow}
-                   variant="failure"
-                   message={alertOpts.current.message}
-                   onDismiss={handleDismiss}
-      />
+
     </>
   );
 }

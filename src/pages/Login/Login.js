@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import {
   Button, Col, Form, FormControl, FormLabel, Row, Spinner,
 } from 'react-bootstrap';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 
 
-import './auth.css';
+import '.././auth.css';
 
 
 function Login() {
