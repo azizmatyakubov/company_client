@@ -6,7 +6,6 @@ import {
 } from 'react-bootstrap';
 
 
-import '.././auth.css';
 
 
 function Login() {
