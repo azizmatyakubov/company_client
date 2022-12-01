@@ -7,13 +7,11 @@ import {
 } from 'react-bootstrap';
 
 import { emailPattern, namePattern } from '../common/constants';
-import useAuth from '../hooks/useAuth';
 
 import './signup.css';
 
 function Signup() {
   const [isLoading, setIsLoading] = useState(false);
-  const { addUser } = useAuth();
   const navigate = useNavigate();
   const {
     register, handleSubmit, formState: { errors },
@@ -25,9 +23,7 @@ function Signup() {
   const handleSignup = async (data) => {
     try {
       setIsLoading(true);
-      const user = await addUser(data);
       // eslint-disable-next-line no-console
-      console.log(`signup successful, user: ${user}`);
       setIsLoading(false);
       navigate('/login');
     } catch (err) {

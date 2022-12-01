@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   Button, Col, Form, FormControl, FormLabel, Row, Spinner,
 } from 'react-bootstrap';
-import useAuth from '../../hooks/useAuth';
 
 
 import '.././auth.css';
@@ -18,7 +17,6 @@ function Login() {
   const [pass, setPass] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const navigate = useNavigate();
-  const { setAuth } = useAuth(); 
 
   useEffect(() => {
     userRef.current.focus();

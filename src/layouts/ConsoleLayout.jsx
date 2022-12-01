@@ -1,12 +1,16 @@
 import { useNavigate, Outlet } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import Sidebar from "../components/Sidebar/Sidebar";
 import Navbar from "../components/Navbar/Navbar";
 
 import "./consoleLayout.scss";
+import "../styles/dark.scss";
+import UserContext from "../context/UserContext";
 
 function ConsoleLayout() {
+  const { darkMode } = useContext(UserContext);
+
   const token = localStorage.getItem("auth");
 
   const navigate = useNavigate();
@@ -19,7 +23,7 @@ function ConsoleLayout() {
 
   return (
     <>
-      <div className="d-flex">
+      <div className={`console-container d-flex ${darkMode ? "dark" : ""}`}>
         <Sidebar />
         <div className="page-content-wrapper">
           <Navbar />
@@ -31,3 +35,4 @@ function ConsoleLayout() {
 }
 
 export default ConsoleLayout;
+

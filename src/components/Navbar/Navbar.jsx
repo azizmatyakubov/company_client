@@ -1,16 +1,15 @@
+import { useContext } from "react";
 import "./navbar.scss";
 import { HiSearch } from "react-icons/hi";
 import { MdLanguage } from "react-icons/md";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { MdNotificationsNone } from "react-icons/md";
 import { MdOutlineChat } from "react-icons/md";
-// import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-// import { DarkModeContext } from "../../context/darkModeContext";
-// import { useContext } from "react";
+import UserContext from "../../context/UserContext";
 
 const Topbar = () => {
-  // const { dispatch } = useContext(DarkModeContext);
-
+  const { darkMode, setDarkMode } = useContext(UserContext);
+  console.log(darkMode);
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -23,9 +22,8 @@ const Topbar = () => {
             <MdLanguage className="icon" />
             English
           </div>
-          <div className="item">
+          <div className="item" onClick={() => setDarkMode(!darkMode)}>
             <MdOutlineDarkMode className="icon" />
-            {/* onClick={() => dispatch({ type: "TOGGLE" }) */}
           </div>
 
           <div className="item">
