@@ -6,9 +6,9 @@ import {
   Col, Button, Form, FormControl, InputGroup, FormLabel, Spinner,
 } from 'react-bootstrap';
 
-import { emailPattern, namePattern } from '../common/constants';
+import { emailPattern, namePattern } from '../../common/constants';
 
-import './signup.css';
+import './signup.scss';
 
 function Signup() {
   const [isLoading, setIsLoading] = useState(false);
