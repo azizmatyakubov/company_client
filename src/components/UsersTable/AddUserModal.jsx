@@ -16,6 +16,17 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
     "hr",
   ]);
 
+  const handleClose = () => {
+    setName("");
+    setSurname("");
+    setEmail("");
+    setPassword("");
+    setRole("user");
+    setPosition("sales");
+    setDepartment("user");
+    handleCloseModal();
+  };
+
   const handleAddUser = async (e) => {
     e.preventDefault();
     const res = await fetch("/api/v1/auth/register", {
@@ -36,12 +47,12 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
     const data = await res.json();
     if (data.id) {
       getUsers();
-      handleCloseModal();
+      handleClose();
     }
   };
 
   return (
-    <Modal show={showModal} onHide={handleCloseModal}>
+    <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Add user</Modal.Title>
       </Modal.Header>
@@ -118,7 +129,7 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseModal}>
+        <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
         <Button variant="primary" onClick={handleAddUser}>
