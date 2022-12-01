@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, FormControl, FormLabel } from "react-bootstrap";
 
 const UpdateUserModal = ({
   showUpdateUserModal,
   handleCloseUpdateUserModal,
+  userId,
+  getUsers,
 }) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("user");
-  const [position, setPosition] = useState("sales");
-  const [department, setDepartment] = useState("user");
+  const [position, setPosition] = useState("developer");
+  const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([
     "sales",
     "marketing",
@@ -18,10 +20,51 @@ const UpdateUserModal = ({
     "hr",
   ]);
 
-  const handleUpdate = async (e) => {
+  const [positions, setPositions] = useState([
+    "Aziz",
+    "developer",
+    "designer",
+    "sales manager",
+    "hr manager",
+  ]);
+
+  useEffect(() => {
+    getUserById(userId);
+  }, [userId, showUpdateUserModal]);
+
+  const handleClose = () => {
+    setName("");
+    setSurname("");
+    setEmail("");
+    setRole("user");
+    setPosition("sales");
+    setDepartment("user");
+    handleCloseUpdateUserModal();
+  };
+
+  const getUserById = async (id) => {
+    const res = await fetch(`/api/v1/users/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth")}`,
+      },
+    });
+    const data = await res.json();
+    setName(data.name);
+    setSurname(data.surname);
+    setEmail(data.email);
+    setRole(data.role);
+    setPosition(data.position);
+    setDepartment(data.department.name);
+  };
+
+  const handleUpdateUser = async (e) => {
+    handleDepartmentChange();
+
     e.preventDefault();
-    const res = await fetch("/api/v1/auth/register", {
-      method: "POST",
+    const res = await fetch(`/api/v1/users/${userId}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("auth")}`,
@@ -32,16 +75,37 @@ const UpdateUserModal = ({
         email,
         role,
         position,
-        department,
       }),
     });
-    const data = await res.json();
-    console.log(data);
-    handleCloseUpdateUserModal();
+
+    if (res.status === 200) {
+      getUsers();
+      handleClose();
+    }
+  };
+
+  const handleDepartmentChange = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch(
+      `/api/v1/users/changeDepartment?departmentName=${department}&userId=${userId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("auth")}`,
+        },
+      }
+    );
+
+    if (res.status === 200) {
+      getUsers();
+      handleClose();
+    }
   };
 
   return (
-    <Modal show={showUpdateUserModal} onHide={handleCloseUpdateUserModal}>
+    <Modal show={showUpdateUserModal} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Add user</Modal.Title>
       </Modal.Header>
@@ -86,6 +150,7 @@ const UpdateUserModal = ({
             <FormLabel>Email</FormLabel>
           </Form.Group>
 
+          {/* Role  */}
           <Form.Group className=" mb-2" controlId="inputRole">
             <FormControl
               as="select"
@@ -101,6 +166,7 @@ const UpdateUserModal = ({
             </FormControl>
           </Form.Group>
 
+          {/* Department  */}
           <Form.Group className=" mb-2" controlId="inputDepartment">
             <FormControl
               as="select"
@@ -110,19 +176,47 @@ const UpdateUserModal = ({
               onChange={(e) => setDepartment(e.target.value)}
               required
             >
-              {departments.map((department) => (
-                <option value={department}>{department}</option>
+              {/* add key  */}
+
+              {departments.map((department, index) => (
+                <option key={index} value={department}>
+                  {department}
+                </option>
+              ))}
+            </FormControl>
+          </Form.Group>
+
+          {/* Position  */}
+          <Form.Group className=" mb-2" controlId="inputPosition">
+            <FormControl
+              as="select"
+              value={position}
+              className="form-control form-input-top"
+              placeholder="Position"
+              onChange={(e) => setPosition(e.target.value)}
+              required
+            >
+              {positions.map((userPosition, index) => (
+                // active option is state
+
+                <option
+                  key={index}
+                  value={userPosition}
+                  selected={userPosition === position ? "selected" : ""}
+                >
+                  {userPosition}
+                </option>
               ))}
             </FormControl>
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseUpdateUserModal}>
+        <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleUpdate}>
-          Add User
+        <Button variant="primary" onClick={handleUpdateUser}>
+          Update user
         </Button>
       </Modal.Footer>
     </Modal>

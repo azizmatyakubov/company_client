@@ -61,7 +61,7 @@ const UsersTable = () => {
         </div>
         {/* table row for display users */}
         {users.map((user) => (
-          <TableRow key={user._id} user={user} />
+          <TableRow key={user._id} user={user} getUsers={getUsers} />
         ))}
       </div>
       <AddUserModal

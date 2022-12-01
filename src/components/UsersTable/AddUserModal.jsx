@@ -121,8 +121,10 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
               onChange={(e) => setDepartment(e.target.value)}
               required
             >
-              {departments.map((department) => (
-                <option value={department}>{department}</option>
+              {departments.map((department, index) => (
+                <option key={index} value={department}>
+                  {department}
+                </option>
               ))}
             </FormControl>
           </Form.Group>

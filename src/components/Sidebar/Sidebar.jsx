@@ -49,7 +49,7 @@ const Sidebar = () => {
 
           <p className="title">USER</p>
           <SidebarItem Icon={FiSettings} text="Settings" isDisabled={true} />
-          <SidebarItem Icon={CgProfile} text="Profile" isDisabled={true} />
+          <SidebarItem Icon={CgProfile} text="Profile" isDisabled={false} />
           <SidebarItem Icon={FiSettings} text="Logout" isDisabled={true} />
         </ul>
       </div>

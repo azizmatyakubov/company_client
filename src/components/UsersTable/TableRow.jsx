@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
+import UpdateUserModal from "./UpdateUserModal";
 
-const TableRow = ({ user }) => {
+const TableRow = ({ user, getUsers }) => {
+  const [showUpdateUserModal, setShowUpdateUserModal] = useState(false);
+  const handleCloseUpdateUserModal = () => setShowUpdateUserModal(false);
+  const handleShowUpdateUserModal = () => setShowUpdateUserModal(true);
+
   return (
     <div className="table-row table-header-row">
       <div className="table-col">
@@ -28,10 +33,16 @@ const TableRow = ({ user }) => {
       </div>
       <div className="table-col">{user.position}</div>
       <div className="table-col">
-        <div className="table-col-btn">
+        <div className="table-col-btn" onClick={handleShowUpdateUserModal}>
           <div className="edit-btn">{<FiEdit2 />}</div>
         </div>
       </div>
+      <UpdateUserModal
+        showUpdateUserModal={showUpdateUserModal}
+        handleCloseUpdateUserModal={handleCloseUpdateUserModal}
+        userId={user._id}
+        getUsers={getUsers}
+      />
     </div>
   );
 };
