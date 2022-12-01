@@ -4,11 +4,9 @@ import Home from './pages/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
-import Profile from './pages/Profile';
+import Profile from './pages/Profile/Profile';
 import Dashboard from './pages/Dashboard/Dashboard';
-import Apps from './pages/Apps';
-import Users from './pages/Users';
-import Settings from './pages/Settings';
+import Users from './pages/Users/Users';
 
 
 function  App() {
@@ -24,9 +22,7 @@ function  App() {
           <Route element={<ConsoleLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="apps" element={<Apps />} />
             <Route path="users" element={<Users />} />
-            <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>
   );

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
-import UsersTable from '../components/UsersTable/UsersTable'
+import UsersTable from '../../components/UsersTable/UsersTable'
 
 
 const Users = () => {
