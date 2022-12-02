@@ -49,6 +49,7 @@ const UpdateUserModal = ({
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("auth")}`,
       },
+      credentials: "include",
     });
     const data = await res.json();
     setName(data.name);
@@ -61,6 +62,8 @@ const UpdateUserModal = ({
 
   const handleUpdateUser = async (e) => {
     handleDepartmentChange();
+
+    console.log(localStorage.getItem("auth"), 'localStorage.getItem("auth")');
 
     e.preventDefault();
     const res = await fetch(`/api/v1/users/${userId}`, {
@@ -202,7 +205,7 @@ const UpdateUserModal = ({
                 <option
                   key={index}
                   value={userPosition}
-                  selected={userPosition === position ? "selected" : ""}
+                  defaultValue={userPosition === position ? userPosition : ""}
                 >
                   {userPosition}
                 </option>
