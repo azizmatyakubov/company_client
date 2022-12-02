@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import "./login.scss";
@@ -32,6 +33,9 @@ const Login = () => {
       if (data.accessToken) {
         navigate("/dashboard", { replace: true });
         localStorage.setItem("auth", data.accessToken);
+        const decoded = jwt_decode(data.accessToken);
+        localStorage.setItem("role", JSON.stringify(decoded.role));
+        
       } else {
         alert("Invalid Credentials");
       }
@@ -93,6 +97,13 @@ const Login = () => {
             <FcGoogle />
             <span>Sign in with Google</span>
           </Button>
+
+          {/* Sign up link */}
+
+          <p className="auth-link">
+            Don't have an account?
+            <span onClick={() => navigate("/signup")}>Sign up</span>
+          </p>
         </div>
       </div>
     </div>

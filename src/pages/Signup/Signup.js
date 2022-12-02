@@ -3,8 +3,13 @@ import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
-  Col, Button, Form, FormControl, InputGroup, FormLabel, Spinner,
-} from 'react-bootstrap';
+  Col,
+  Button,
+  Form,
+  FormControl,
+  FormLabel,
+  Spinner,
+} from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 
 import { emailPattern, namePattern } from "../../common/constants";
@@ -153,7 +158,7 @@ function Signup() {
             <div className="or-text">
               <p className="">OR</p>
             </div>
-            <Button className="google-login-btn mt-2">
+            <Button>
               <FcGoogle />
               <span>Sign in with Google</span>
             </Button>

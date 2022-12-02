@@ -13,34 +13,9 @@ const UpdateUserModal = ({
   const [role, setRole] = useState("user");
   const [position, setPosition] = useState("developer");
   const [department, setDepartment] = useState("");
-  const [departments, setDepartments] = useState([
-    "sales",
-    "marketing",
-    "it",
-    "hr",
-  ]);
 
-  const [positions, setPositions] = useState([
-    "Aziz",
-    "developer",
-    "designer",
-    "sales manager",
-    "hr manager",
-  ]);
-
-  useEffect(() => {
-    getUserById(userId);
-  }, [userId, showUpdateUserModal]);
-
-  const handleClose = () => {
-    setName("");
-    setSurname("");
-    setEmail("");
-    setRole("user");
-    setPosition("sales");
-    setDepartment("user");
-    handleCloseUpdateUserModal();
-  };
+  const departments = ["sales", "marketing", "it", "hr"];
+  const positions = ["developer", "designer", "manager", "sales"];
 
   const getUserById = async (id) => {
     const res = await fetch(`/api/v1/users/${id}`, {
@@ -58,6 +33,16 @@ const UpdateUserModal = ({
     setRole(data.role);
     setPosition(data.position);
     setDepartment(data.department.name);
+  };
+
+  const handleClose = () => {
+    setName("");
+    setSurname("");
+    setEmail("");
+    setRole("user");
+    setPosition("sales");
+    setDepartment("user");
+    handleCloseUpdateUserModal();
   };
 
   const handleUpdateUser = async (e) => {
@@ -106,6 +91,11 @@ const UpdateUserModal = ({
       handleClose();
     }
   };
+
+  useEffect(() => {
+    getUserById(userId);
+  }, [showUpdateUserModal]);
+
 
   return (
     <Modal show={showUpdateUserModal} onHide={handleClose}>

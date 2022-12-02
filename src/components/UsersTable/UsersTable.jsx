@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AiOutlineCloudDownload, AiOutlineUserAdd } from "react-icons/ai";
 import AddUserModal from "./AddUserModal";
 import TableRow from "./TableRow";
@@ -8,6 +8,7 @@ import "./usersTable.scss";
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const role = localStorage.getItem("role");
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
@@ -21,7 +22,6 @@ const UsersTable = () => {
       },
     });
     const data = await res.json();
-    console.log(data);
     setUsers(data);
   };
 
@@ -36,18 +36,22 @@ const UsersTable = () => {
         <h5>Users list</h5>
         <div className="table-badge">{users.length} users</div>
 
-        <button className="table-btn-white">
-          <span>
-            <AiOutlineCloudDownload size={20} />
-          </span>
-          Download CSV
-        </button>
-        <button className="table-btn-dark-blue" onClick={handleShowModal}>
-          <span>
-            <AiOutlineUserAdd size={20} />
-          </span>
-          Add user
-        </button>
+        {role === '"admin"' && (
+          <>
+            <button className="table-btn-white">
+              <span>
+                <AiOutlineCloudDownload size={20} />
+              </span>
+              Download CSV
+            </button>
+            <button className="table-btn-dark-blue" onClick={handleShowModal}>
+              <span>
+                <AiOutlineUserAdd size={20} />
+              </span>
+              Add user
+            </button>
+          </>
+        )}
       </div>
       {/* Users List  */}
       <div className="table-body">

@@ -3,6 +3,7 @@ import { FiEdit2 } from "react-icons/fi";
 import UpdateUserModal from "./UpdateUserModal";
 
 const TableRow = ({ user, getUsers }) => {
+  const role = localStorage.getItem("role");
   const [showUpdateUserModal, setShowUpdateUserModal] = useState(false);
   const handleCloseUpdateUserModal = () => setShowUpdateUserModal(false);
   const handleShowUpdateUserModal = () => setShowUpdateUserModal(true);
@@ -33,9 +34,11 @@ const TableRow = ({ user, getUsers }) => {
       </div>
       <div className="table-col">{user.position}</div>
       <div className="table-col">
-        <div className="table-col-btn" onClick={handleShowUpdateUserModal}>
-          <div className="edit-btn">{<FiEdit2 />}</div>
-        </div>
+        {role === '"admin"' && (
+          <div className="table-col-btn" onClick={handleShowUpdateUserModal}>
+            <div className="edit-btn">{<FiEdit2 />}</div>
+          </div>
+        )}
       </div>
       <UpdateUserModal
         showUpdateUserModal={showUpdateUserModal}

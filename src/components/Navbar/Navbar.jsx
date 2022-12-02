@@ -10,7 +10,6 @@ import UserContext from "../../context/UserContext";
 
 const Topbar = () => {
   const { darkMode, setDarkMode } = useContext(UserContext);
-  console.log(darkMode);
   return (
     <div className="navbar">
       <div className="wrapper">
