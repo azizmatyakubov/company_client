@@ -13,7 +13,6 @@ import "./signup.scss";
 
 function Signup() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -38,14 +37,9 @@ function Signup() {
       const dataRes = await res.json();
       if (dataRes.id) {
         navigate("/login", { replace: true });
+        setIsLoading(false);
       }
-
-      setIsLoading(false);
-      navigate("/login");
     } catch (err) {
-      // Need to useRef to avoid cyclic reference of the show state in StatusAlert but we now must set alertOps
-      // before a set state call so that StatusAlert can render.
-      // TODO: Figure a more elegant solution for auto-dismissal alert.
       alertOpts.current = { isShow: true, message: err.message };
       setIsLoading(false);
     }

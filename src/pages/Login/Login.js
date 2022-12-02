@@ -2,39 +2,43 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import "./login.scss";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    console.log("email", email);
     e.preventDefault();
+    setIsLoading(true);
 
-    const res = await fetch("/api/v1/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+    try {
+      const res = await fetch("/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.accessToken) {
-      navigate("/dashboard", { replace: true });
-      localStorage.setItem("auth", data.accessToken);
-    } else {
-      alert("Invalid Credentials");
+      if (data.accessToken) {
+        navigate("/dashboard", { replace: true });
+        localStorage.setItem("auth", data.accessToken);
+      } else {
+        alert("Invalid Credentials");
+      }
+    } catch (error) {
+      console.log(error);
+      isLoading(false);
     }
-
-    console.log(res);
   };
 
   return (
@@ -74,7 +78,7 @@ const Login = () => {
             </Form.Group>
 
             <Button className="login-btn" onClick={handleSubmit}>
-              Login
+              {isLoading ? <Spinner animation="border" /> : "Login"}
             </Button>
 
             {/* Or text, display center */}
