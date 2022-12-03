@@ -12,9 +12,6 @@ const UpdateUserModal = ({
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("user");
   const [position, setPosition] = useState("developer");
-  const [department, setDepartment] = useState("");
-
-  const departments = ["sales", "marketing", "it", "hr"];
   const positions = ["developer", "designer", "manager", "sales"];
 
   const getUserById = async (id) => {
@@ -32,7 +29,6 @@ const UpdateUserModal = ({
     setEmail(data.email);
     setRole(data.role);
     setPosition(data.position);
-    setDepartment(data.department.name);
   };
 
   const handleClose = () => {
@@ -41,16 +37,12 @@ const UpdateUserModal = ({
     setEmail("");
     setRole("user");
     setPosition("sales");
-    setDepartment("user");
     handleCloseUpdateUserModal();
   };
 
   const handleUpdateUser = async (e) => {
-    handleDepartmentChange();
-
-    console.log(localStorage.getItem("auth"), 'localStorage.getItem("auth")');
-
     e.preventDefault();
+
     const res = await fetch(`/api/v1/users/${userId}`, {
       method: "PUT",
       headers: {
@@ -76,7 +68,7 @@ const UpdateUserModal = ({
     e.preventDefault();
 
     const res = await fetch(
-      `/api/v1/users/changeDepartment?departmentName=${department}&userId=${userId}`,
+      `/api/v1/users/changeDepartment?departmentName="departmentId"&userId=${userId}`,
       {
         method: "PUT",
         headers: {
@@ -95,7 +87,6 @@ const UpdateUserModal = ({
   useEffect(() => {
     getUserById(userId);
   }, [showUpdateUserModal]);
-
 
   return (
     <Modal show={showUpdateUserModal} onHide={handleClose}>
@@ -156,26 +147,6 @@ const UpdateUserModal = ({
               <option value="user">User</option>
               <option value="admin">Admin</option>
               <option value="manager">Manager</option>
-            </FormControl>
-          </Form.Group>
-
-          {/* Department  */}
-          <Form.Group className=" mb-2" controlId="inputDepartment">
-            <FormControl
-              as="select"
-              value={department}
-              className="form-control form-input-top"
-              placeholder="Department"
-              onChange={(e) => setDepartment(e.target.value)}
-              required
-            >
-              {/* add key  */}
-
-              {departments.map((department, index) => (
-                <option key={index} value={department}>
-                  {department}
-                </option>
-              ))}
             </FormControl>
           </Form.Group>
 

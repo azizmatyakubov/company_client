@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineCloudDownload, AiOutlineUserAdd } from "react-icons/ai";
 import AddUserModal from "./AddUserModal";
 import TableRow from "./TableRow";
@@ -14,7 +14,7 @@ const UsersTable = () => {
   const handleShowModal = () => setShowModal(true);
 
   const getUsers = async () => {
-    const res = await fetch("/api/v1/users", {
+    const res = await fetch(`/api/v1/users`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

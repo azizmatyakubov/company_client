@@ -12,7 +12,7 @@ const TableRow = ({ user, getUsers }) => {
     <div className="table-row table-header-row">
       <div className="table-col">
         <div className="table-col-img">
-          <img src="https://picsum.photos/200" alt="user" />
+          <img src={user.img} alt="user" />
         </div>
         <div className="table-col-name">
           <h5>{user.name}</h5>
@@ -20,13 +20,13 @@ const TableRow = ({ user, getUsers }) => {
         </div>
       </div>
       <div className="table-col">
-        <div className="table-col-badge admin">
+        <div className={`table-col-badge ${user.role} `}>
           <span>{user.role}</span>
         </div>
       </div>
       <div className="table-col">{user.email}</div>
       <div className="table-col">
-        <div className="table-col-badge sales">
+        <div className={`table-col-badge ${user.department}`}>
           <span>
             {user.department ? user.department.name : "No department"}
           </span>

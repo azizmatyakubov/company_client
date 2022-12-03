@@ -5,25 +5,14 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
   const [position, setPosition] = useState("sales");
-  const [department, setDepartment] = useState("user");
-  const [departments, setDepartments] = useState([
-    "sales",
-    "marketing",
-    "it",
-    "hr",
-  ]);
+  const positions = ["developer", "designer", "manager", "sales"];
 
   const handleClose = () => {
     setName("");
     setSurname("");
     setEmail("");
-    setPassword("");
-    setRole("user");
     setPosition("sales");
-    setDepartment("user");
     handleCloseModal();
   };
 
@@ -39,9 +28,7 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
         name,
         surname,
         email,
-        role,
         position,
-        department,
       }),
     });
     const data = await res.json();
@@ -97,36 +84,22 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
             <FormLabel>Email</FormLabel>
           </Form.Group>
 
-          <Form.Group className=" mb-2" controlId="inputRole">
+          {/* Position  */}
+          <Form.Group className="form-floating mb-2" controlId="inputPosition">
             <FormControl
               as="select"
-              value={role}
+              value={position}
               className="form-control form-input-top"
-              placeholder="Role"
-              onChange={(e) => setRole(e.target.value)}
+              onChange={(e) => setPosition(e.target.value)}
               required
             >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-              <option value="manager">Manager</option>
-            </FormControl>
-          </Form.Group>
-
-          <Form.Group className=" mb-2" controlId="inputDepartment">
-            <FormControl
-              as="select"
-              value={department}
-              className="form-control form-input-top"
-              placeholder="Department"
-              onChange={(e) => setDepartment(e.target.value)}
-              required
-            >
-              {departments.map((department, index) => (
-                <option key={index} value={department}>
-                  {department}
+              {positions.map((position) => (
+                <option key={position} value={position}>
+                  {position}
                 </option>
               ))}
             </FormControl>
+            <FormLabel>Position</FormLabel>
           </Form.Group>
         </Form>
       </Modal.Body>

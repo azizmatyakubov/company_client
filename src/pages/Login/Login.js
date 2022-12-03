@@ -11,13 +11,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-
+  console.log(process.env.REACT_APP_API_URL)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/v1/auth/login", {
+   
+      const res = await fetch(`/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
