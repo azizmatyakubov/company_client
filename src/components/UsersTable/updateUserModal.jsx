@@ -19,7 +19,7 @@ const UpdateUserModal = ({
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("auth")}`,
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       credentials: "include",
     });
@@ -47,7 +47,7 @@ const UpdateUserModal = ({
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("auth")}`,
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify({
         name,
@@ -64,25 +64,25 @@ const UpdateUserModal = ({
     }
   };
 
-  const handleDepartmentChange = async (e) => {
-    e.preventDefault();
+  // const handleDepartmentChange = async (e) => {
+  //   e.preventDefault();
 
-    const res = await fetch(
-      `/api/v1/users/changeDepartment?departmentName="departmentId"&userId=${userId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("auth")}`,
-        },
-      }
-    );
+  //   const res = await fetch(
+  //     `/api/v1/users/changeDepartment?departmentName="departmentId"&userId=${userId}`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${localStorage.getItem("auth")}`,
+  //       },
+  //     }
+  //   );
 
-    if (res.status === 200) {
-      getUsers();
-      handleClose();
-    }
-  };
+  //   if (res.status === 200) {
+  //     getUsers();
+  //     handleClose();
+  //   }
+  // };
 
   useEffect(() => {
     getUserById(userId);

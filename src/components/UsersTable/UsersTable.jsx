@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axiosInstance from "../../utils/axiosInstance";
 import { AiOutlineCloudDownload, AiOutlineUserAdd } from "react-icons/ai";
 import AddUserModal from "./AddUserModal";
 import TableRow from "./TableRow";
@@ -14,15 +15,8 @@ const UsersTable = () => {
   const handleShowModal = () => setShowModal(true);
 
   const getUsers = async () => {
-    const res = await fetch(`/api/v1/users`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("auth")}`,
-      },
-    });
-    const data = await res.json();
-    setUsers(data);
+    const res = await axiosInstance.get("api/v1/users");
+    setUsers(res.data);
   };
 
   useEffect(() => {

@@ -17,7 +17,6 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-   
       const res = await fetch(`/api/v1/auth/login`, {
         method: "POST",
         headers: {
@@ -27,13 +26,15 @@ const Login = () => {
           email,
           password,
         }),
+        credentials: 'include'
+        
       });
 
       const data = await res.json();
 
       if (data.accessToken) {
         navigate("/dashboard", { replace: true });
-        localStorage.setItem("auth", data.accessToken);
+        localStorage.setItem("accessToken", data.accessToken);
         const decoded = jwt_decode(data.accessToken);
         localStorage.setItem("role", JSON.stringify(decoded.role));
         

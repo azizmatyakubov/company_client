@@ -6,12 +6,12 @@ import Navbar from "../components/Navbar/Navbar";
 
 import "./consoleLayout.scss";
 import "../styles/dark.scss";
-import UserContext from "../context/UserContext";
+import ThemeContext from "../context/ThemeContext";
 
 function ConsoleLayout() {
-  const { darkMode } = useContext(UserContext);
+  const { darkMode } = useContext(ThemeContext);
 
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("accessToken");
 
   const navigate = useNavigate();
 

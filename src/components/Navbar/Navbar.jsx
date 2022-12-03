@@ -6,10 +6,10 @@ import { MdOutlineDarkMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import { MdNotificationsNone } from "react-icons/md";
 import { MdOutlineChat } from "react-icons/md";
-import UserContext from "../../context/UserContext";
+import ThemeContext from "../../context/ThemeContext";
 
 const Topbar = () => {
-  const { darkMode, setDarkMode } = useContext(UserContext);
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   return (
     <div className="navbar">
       <div className="wrapper">
