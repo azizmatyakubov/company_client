@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
-import UpdateUserModal from "./UpdateUserModal.jsx";
+// import UpdateUserModal from "./UpdateUserModal.jsx";
 
 const TableRow = ({ user, getUsers }) => {
   const role = localStorage.getItem("role");
@@ -40,12 +40,12 @@ const TableRow = ({ user, getUsers }) => {
           </div>
         )}
       </div>
-      <UpdateUserModal
+      {/* <UpdateUserModal
         showUpdateUserModal={showUpdateUserModal}
         handleCloseUpdateUserModal={handleCloseUpdateUserModal}
         userId={user._id}
         getUsers={getUsers}
-      />
+      /> */}
     </div>
   );
 };
