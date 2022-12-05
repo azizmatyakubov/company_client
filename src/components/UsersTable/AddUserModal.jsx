@@ -6,14 +6,11 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [position, setPosition] = useState("sales");
-  const positions = ["developer", "designer", "manager", "sales"];
 
   const handleClose = () => {
     setName("");
     setSurname("");
     setEmail("");
-    setPosition("sales");
     handleCloseModal();
   };
 
