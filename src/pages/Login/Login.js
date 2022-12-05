@@ -18,25 +18,21 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/v1/auth/login`,
-        {
-          email,
-          password,
+      const res = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const { accessToken } = res.data;
-
-      if (accessToken) {
+        body: JSON.stringify({ email, password }),
+      });
+      
+      const data = await res.json();
+      if (data.accessToken) {
         navigate("/dashboard", { replace: true });
-        localStorage.setItem("accessToken", accessToken);
-        const decoded = jwt_decode(accessToken);
+        localStorage.setItem("accessToken", data.accessToken);
+        const decoded = jwt_decode(data.accessToken);
         localStorage.setItem("role", JSON.stringify(decoded.role));
+        setIsLoading(false);
       } else {
         alert("Invalid Credentials");
         setIsLoading(false);
