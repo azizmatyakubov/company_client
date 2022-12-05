@@ -39,24 +39,11 @@ const UpdateUserModal = ({
       getUsers();
       handleClose();
     }
-
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    //   },
-    //   body: JSON.stringify({
-    //     name,
-    //     surname,
-    //     email,
-    //     role,
-    //     position,
-    //   }),
-    // });
   };
 
   useEffect(() => {
     getUserById(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showUpdateUserModal === true]);
 
   return (
