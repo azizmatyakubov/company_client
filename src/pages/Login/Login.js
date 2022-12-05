@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import "./login.scss";
 import { Form, Button, Spinner } from "react-bootstrap";
+
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,40 +13,37 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  console.log(process.env.REACT_APP_API_URL)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const res = await fetch(`/api/v1/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/v1/auth/login`,
+        {
           email,
           password,
-        }),
-        credentials: 'include'
-        
-      });
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const { accessToken } = res.data;
 
-      const data = await res.json();
-
-      if (data.accessToken) {
+      if (accessToken) {
         navigate("/dashboard", { replace: true });
-        localStorage.setItem("accessToken", data.accessToken);
-        const decoded = jwt_decode(data.accessToken);
+        localStorage.setItem("accessToken", accessToken);
+        const decoded = jwt_decode(accessToken);
         localStorage.setItem("role", JSON.stringify(decoded.role));
-        
       } else {
         alert("Invalid Credentials");
         setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
-      isLoading(false);
+      setIsLoading(false);
     }
   };
 
