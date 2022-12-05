@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, FormControl, FormLabel } from "react-bootstrap";
+import axiosInstance from "../../utils/axiosInstance";
 
 const UpdateUserModal = ({
   showUpdateUserModal,
@@ -10,83 +11,53 @@ const UpdateUserModal = ({
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("user");
-  const [position, setPosition] = useState("developer");
-  const positions = ["developer", "designer", "manager", "sales"];
 
   const getUserById = async (id) => {
-    const res = await fetch(`/api/v1/users/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      credentials: "include",
-    });
-    const data = await res.json();
-    setName(data.name);
-    setSurname(data.surname);
-    setEmail(data.email);
-    setRole(data.role);
-    setPosition(data.position);
+    const res = await axiosInstance.get(`/api/v1/users/${id}`);
+    setName(res.data.name);
+    setSurname(res.data.surname);
+    setEmail(res.data.email);
   };
 
   const handleClose = () => {
     setName("");
     setSurname("");
     setEmail("");
-    setRole("user");
-    setPosition("sales");
     handleCloseUpdateUserModal();
   };
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`/api/v1/users/${userId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({
-        name,
-        surname,
-        email,
-        role,
-        position,
-      }),
+    const res = await axiosInstance.put(`/api/v1/users/${userId}`, {
+      name,
+      surname,
+      email,
     });
 
     if (res.status === 200) {
       getUsers();
       handleClose();
     }
+
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //   },
+    //   body: JSON.stringify({
+    //     name,
+    //     surname,
+    //     email,
+    //     role,
+    //     position,
+    //   }),
+    // });
   };
-
-  // const handleDepartmentChange = async (e) => {
-  //   e.preventDefault();
-
-  //   const res = await fetch(
-  //     `/api/v1/users/changeDepartment?departmentName="departmentId"&userId=${userId}`,
-  //     {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${localStorage.getItem("auth")}`,
-  //       },
-  //     }
-  //   );
-
-  //   if (res.status === 200) {
-  //     getUsers();
-  //     handleClose();
-  //   }
-  // };
 
   useEffect(() => {
     getUserById(userId);
-  }, [showUpdateUserModal]);
+  }, [showUpdateUserModal === true]);
 
   return (
     <Modal show={showUpdateUserModal} onHide={handleClose}>
@@ -132,46 +103,6 @@ const UpdateUserModal = ({
               required
             />
             <FormLabel>Email</FormLabel>
-          </Form.Group>
-
-          {/* Role  */}
-          <Form.Group className=" mb-2" controlId="inputRole">
-            <FormControl
-              as="select"
-              value={role}
-              className="form-control form-input-top"
-              placeholder="Role"
-              onChange={(e) => setRole(e.target.value)}
-              required
-            >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-              <option value="manager">Manager</option>
-            </FormControl>
-          </Form.Group>
-
-          {/* Position  */}
-          <Form.Group className=" mb-2" controlId="inputPosition">
-            <FormControl
-              as="select"
-              value={position}
-              className="form-control form-input-top"
-              placeholder="Position"
-              onChange={(e) => setPosition(e.target.value)}
-              required
-            >
-              {positions.map((userPosition, index) => (
-                // active option is state
-
-                <option
-                  key={index}
-                  value={userPosition}
-                  defaultValue={userPosition === position ? userPosition : ""}
-                >
-                  {userPosition}
-                </option>
-              ))}
-            </FormControl>
           </Form.Group>
         </Form>
       </Modal.Body>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, FormControl, FormLabel } from "react-bootstrap";
+import axiosInstance from "../../utils/axiosInstance";
 
 const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
   const [name, setName] = useState("");
@@ -18,21 +19,13 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
 
   const handleAddUser = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/v1/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("auth")}`,
-      },
-      body: JSON.stringify({
-        name,
-        surname,
-        email,
-        position,
-      }),
+    const res = await axiosInstance.post("/api/v1/auth/register", {
+      name,
+      surname,
+      email,
     });
-    const data = await res.json();
-    if (data.id) {
+
+    if (res.status === 200) {
       getUsers();
       handleClose();
     }
@@ -82,24 +75,6 @@ const AddUserModal = ({ showModal, handleCloseModal, getUsers }) => {
               required
             />
             <FormLabel>Email</FormLabel>
-          </Form.Group>
-
-          {/* Position  */}
-          <Form.Group className="form-floating mb-2" controlId="inputPosition">
-            <FormControl
-              as="select"
-              value={position}
-              className="form-control form-input-top"
-              onChange={(e) => setPosition(e.target.value)}
-              required
-            >
-              {positions.map((position) => (
-                <option key={position} value={position}>
-                  {position}
-                </option>
-              ))}
-            </FormControl>
-            <FormLabel>Position</FormLabel>
           </Form.Group>
         </Form>
       </Modal.Body>

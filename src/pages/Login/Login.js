@@ -40,6 +40,7 @@ const Login = () => {
         
       } else {
         alert("Invalid Credentials");
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);

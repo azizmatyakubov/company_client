@@ -15,8 +15,21 @@ const UsersTable = () => {
   const handleShowModal = () => setShowModal(true);
 
   const getUsers = async () => {
-    const res = await axiosInstance.get("api/v1/users");
+    const res = await axiosInstance.get("/api/v1/users");
     setUsers(res.data);
+  };
+
+  const handleDownlaodCsv = async () => {
+    const res = await axiosInstance.get("api/v1/users/csv", {
+      responseType: "blob",
+    });
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "users.csv");
+    document.body.appendChild(link);
+    link.click();
+    return;
   };
 
   useEffect(() => {
@@ -32,7 +45,10 @@ const UsersTable = () => {
 
         {role === '"admin"' && (
           <>
-            <button className="table-btn-white">
+            <button
+              className="table-btn-white"
+              onClick={() => handleDownlaodCsv()}
+            >
               <span>
                 <AiOutlineCloudDownload size={20} />
               </span>

@@ -1,17 +1,33 @@
 import SidebarItem from "./SidebarItem";
-
 import { RxDashboard } from "react-icons/rx";
 import { FiUsers } from "react-icons/fi";
 import { IoIosStats } from "react-icons/io";
 import { MdNotificationsNone } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import { BiCategoryAlt } from "react-icons/bi";
+import { FiShoppingBag } from "react-icons/fi";
+import { BiSupport } from "react-icons/bi";
+import { AiOutlineLogout } from "react-icons/ai";
 
 import "./sidebar.scss";
+import axiosInstance from "../../utils/axiosInstance";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("role");
+
+    const res = await axiosInstance.get("api/v1/auth/logout");
+    if (res.status === 204) {
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -32,8 +48,12 @@ const Sidebar = () => {
             text="Departments"
             isDisabled={true}
           />
-          <SidebarItem Icon={FiUsers} text="Orders" isDisabled={true} />
-          <SidebarItem Icon={FiUsers} text="Categories" isDisabled={true} />
+          <SidebarItem Icon={FiShoppingBag} text="Orders" isDisabled={true} />
+          <SidebarItem
+            Icon={BiCategoryAlt}
+            text="Categories"
+            isDisabled={true}
+          />
 
           <p className="title">USEFUL</p>
           <SidebarItem Icon={IoIosStats} text="Stats" isDisabled={true} />
@@ -43,14 +63,21 @@ const Sidebar = () => {
             isDisabled={true}
           />
 
+          <p className="title">SUPPORT</p>
+          <SidebarItem Icon={BiSupport} text="Get help" isDisabled={true} />
+          <SidebarItem
+            Icon={CgProfile}
+            text="Submit feedback"
+            isDisabled={true}
+          />
+
           <p className="title">SERVICE</p>
           <SidebarItem Icon={FiSettings} text="Settings" isDisabled={true} />
-          <SidebarItem Icon={CgProfile} text="Profile" isDisabled={true} />
-
-          <p className="title">USER</p>
-          <SidebarItem Icon={FiSettings} text="Settings" isDisabled={true} />
           <SidebarItem Icon={CgProfile} text="Profile" isDisabled={false} />
-          <SidebarItem Icon={FiSettings} text="Logout" isDisabled={true} />
+          <li onClick={() => handleLogout()}>
+            <AiOutlineLogout className="icon" />
+            <span>Logout</span>
+          </li>
         </ul>
       </div>
     </div>
